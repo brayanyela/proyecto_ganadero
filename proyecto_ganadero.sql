@@ -265,3 +265,60 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+
+
+
+
+/* consultas 10
+1-Seleccionar todos los registros de una tabla:
+SELECT * FROM suministro;
+2-Contar el número de registros en una tabla:
+SELECT COUNT(*) FROM tipo;
+3-suma del peso de todos los animales 
+SELECT SUM(peso) FROM animal;
+4-muestra el peso maximo entre todo el ganado de cheque 
+SELECT MAX(peso) FROM chequeo;
+5-consulta de la minima cantidad de suministro
+SELECT MIN(cantidad) FROM suministro;
+6-consulta de trascurrido entre  ¨x" a "y"
+SELECT * FROM chequeo WHERE fecha_chequeo BETWEEN '2023-04-28' AND '2023-04-29';
+7-agrupar registros de dos columnas mostrando la primer columna como principal
+SELECT nombre, telefono FROM veterinario GROUP BY nombre;
+8-agrupa los valores relacionados con la búsqueda
+SELECT * FROM animal WHERE peso IN (320, 720, 650);
+9-busca valores similares 
+SELECT * FROM animal WHERE peso LIKE '320';
+10-eliminar registro de una tabla
+DELETE FROM animal WHERE peso= 550;
+----conslultas joins 10
+1-Busca los chequeos realizados por los veterinarios
+SELECT chequeo.*, veterinario.nombre FROM chequeo INNER JOIN veterinario ON chequeo.id_veterinario = veterinario.id_veterinario;
+2- Selecciona la fecha de la tabla chequeo de cada animal, con su respectivo género y cantidad de alimento que se toma de la tabla suministro
+SELECT animal.id_animal,chequeo.fecha_chequeo, animal.genero, suministro.cantidad FROM chequeo LEFT JOIN animal ON chequeo.id_animal = animal.id_animal LEFT JOIN suministro ON suministro.id_animal = animal.id_animal;
+3-selecciona el id de chequeo con las recomendaciones asignadas a cada animal los cuales también mostrará sus respectivos id
+SELECT animal.id_animal,chequeo.id_chequeo, chequeo.recomendaciones FROM animal LEFT JOIN chequeo ON chequeo.id_animal = animal.id_animal;
+4-Selecciona el id de animal  y recomendación hecha en el chequeo para así seguir de una buena manera la crianza del animal.
+SELECT animal.id_animal, chequeo.recomendaciones FROM animal INNER JOIN chequeo ON chequeo.id_animal = animal.id_animal;
+ 
+ 5- Selecciona el alimento  con su respectivo id y  la cantidad total del suministro 
+SELECT alimento.nombre, alimento.id_alimento, SUM(suministro.cantidad) AS 'cantidad total' FROM alimento INNER JOIN suministro ON alimento.id_alimento = suministro.id_alimento INNER JOIN animal ON suministro.id_animal = animal.id_animal GROUP BY alimento.nombre, alimento.id_alimento;
+6- Selecciona trabajador mostrando los nombres de cada uno,suministro brindara las horas que se  utilizaran para el manejo del alimento
+SELECT trabajor.id_trabajador,trabajor.nombre, suministro.hora, alimento.nombre FROM trabajor LEFT JOIN suministro ON suministro.id_trabajador = trabajor.id_trabajador LEFT JOIN alimento ON suministro.id_alimento = alimento.id_alimento;
+7- Selecciona la tabla procedimiento tomando el tipo, luego obtiene la hora y fecha de la tabla chequeo, para así poder informar cual es el tipo de procedimiento que se debe seguir
+SELECT procedimiento.fecha_chequeo,tipo.tipo, suministro.hora FROM procedimiento LEFT JOIN tipo ON procedimiento.id_tipo = tipo.id_tipo LEFT JOIN suministro ON procedimiento.id_procedimiento = suministro.id_animal WHERE suministro.id_suministro IS NOT NULL;
+8-muestra el id del animal con el nombre de la raza y el peso de cada uno para asi diferenciar los pesos del ganado  
+SELECT animal.id_animal,animal.peso, tipo_animal.raza FROM animal LEFT JOIN tipo_animal ON animal.id_tipo_animal = tipo_animal.id_tipo_animal;
+9- Obtiene las recomendaciones con su id desde chequeo, por otro lado obtiene id y género desde la tabla animal, así facilitando el seguimiento que se le debe hacer a cada animal con su respectivo género
+SELECT chequeo.id_chequeo, chequeo.recomendaciones,animal.id_animal, `animal`.`genero` FROM `chequeo` LEFT JOIN animal ON chequeo.id_animal = animal.id_animal;
+10-Obtiene el  id veterinario y especialización, toma la tabla animal escogiendo su id, por otro lado toma a chequeo para utilizar las recomendaciones, así ayudando a tener un mejor conocimiento sobre los veterinarios y su objetivo en los animales
+SELECT veterinario.id_veterinario, veterinario.especializacion, chequeo.recomendaciones, animal.id_animal FROM veterinario LEFT JOIN chequeo ON chequeo.id_veterinario = veterinario.id_veterinario LEFT JOIN animal ON chequeo.id_animal = animal.id_animal;
+ integrantes
+ jose Alexander Aroca Mera
+Camilo Reyes Fernandez
+Brayan Yela Mera
+Andres Quiñonez Ruiz
+Julio  Castillo Acosta
+Ana Ordoñez Ruiz
+*/
